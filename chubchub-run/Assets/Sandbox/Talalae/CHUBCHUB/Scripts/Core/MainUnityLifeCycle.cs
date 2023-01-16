@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainUnityLifeCycle : MonoBehaviour
 {
@@ -31,22 +30,12 @@ public class MainUnityLifeCycle : MonoBehaviour
     
         private void Start() 
         {
-            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_INIT);
+            APPSTATE_ApplicationInitialState();
         }
 
     #endregion
 
     #region Private Methods
-
-        public void LaunchGameState()
-        {
-            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_LAUNCH);
-        }
-
-        public void LoadGameScene(string index)
-        {
-            SceneManager.LoadScene(index);
-        }
 
         public void LoadInitialGameData()
         {
@@ -86,14 +75,68 @@ public class MainUnityLifeCycle : MonoBehaviour
 
             if(newPlayer)
             {
-                AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_REGISTER);
+                APPSTATE_RegisterDataState();
             }
             else
             {
-                AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MAINMENU);
+                APPSTATE_MainMenuDisplayState();
             }
         
             StopCoroutine(LoadingGameDataCoroutine);
+        }
+
+    #endregion
+
+    #region Appstate Control Methods
+
+        public void APPSTATE_ApplicationInitialState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_INIT);
+        }
+
+        public void APPSTATE_RegisterDataState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_REGISTER);
+        }
+
+        public void APPSTATE_MainMenuDisplayState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MAINMENU);
+        }
+
+        public void APPSTATE_PreparingGameState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_PREPARING);
+        }
+
+        public void APPSTATE_MatchHistoryState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MATCH);
+        }
+
+        public void APPSTATE_InventoryState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_INVENTORY);
+        }
+
+        public void APPSTATE_CostumeState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_COSTUME);
+        }
+
+        public void APPSTATE_LaunchGameState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_LAUNCH);
+        }
+
+        public void APPSTATE_GameplayState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_GAMEPLAY);
+        }
+
+        public void APPSTATE_EndgameState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_ENDGAME);
         }
 
     #endregion

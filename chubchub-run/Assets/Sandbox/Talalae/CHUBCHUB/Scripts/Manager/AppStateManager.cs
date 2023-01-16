@@ -77,13 +77,84 @@ public class AppStateManager
                         
                         break;
 
+                    case Enumerators.AppState.APP_PREPARING:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActivePreparingGameplayScreenPanel();
+                        TimerManager.Instance.SetupPreparingTimer();
+                        AppUIManager.Instance.SyncTimerTextWithGUI();
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_MATCH:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveMatchHistoryScreenPanel();
+                        AppUIManager.Instance.FetchMatchHistoryToGUI();
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_INVENTORY:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveInventoryScreenPanel();
+                        AppUIManager.Instance.FetchInventoryToGUI();
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_COSTUME:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveCostumeScreenPanel();
+                        
+                        break;
+
                     case Enumerators.AppState.APP_LAUNCH:
                     
                         //Debug Region
                         DebugStateManager.Instance.DebugAppStateChanged(index); 
 
                         //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        SceneControllerManager.Instance.LoadGameScene("SCENE_GAMEPLAY");
 
+                        break;
+
+                    case Enumerators.AppState.APP_GAMEPLAY:
+                    
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        GameplayUIManager.Instance.CloseAllComponent();
+                        GameplayUIManager.Instance.SetActiveGameplayScreenPanel();
+
+                        break;
+
+                    case Enumerators.AppState.APP_ENDGAME:
+                    
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        GameplayUIManager.Instance.CloseAllComponent();
+                        GameplayUIManager.Instance.SetActiveEndGameScreenPanel();
 
                         break;
 

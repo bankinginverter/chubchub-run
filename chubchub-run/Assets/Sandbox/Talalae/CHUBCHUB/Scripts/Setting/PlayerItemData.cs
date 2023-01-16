@@ -10,6 +10,6 @@ public class PlayerItemData
     
     public PlayerItemData (PlayerManager playerManager)    
     {
-        itemListData = PlayerManager.Instance.itemList;
+        itemListData = PlayerManager.Instance.GAME_itemList;
     }
 }

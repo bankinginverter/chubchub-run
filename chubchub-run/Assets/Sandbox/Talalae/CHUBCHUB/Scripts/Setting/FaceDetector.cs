@@ -26,25 +26,7 @@ public class FaceDetector : MonoBehaviour
             Instance = this;
         }
 
-    #endregion
-
-    #region Unity Methods
-
-        void Start()
-        {
-            WebCamDevice[] devices = WebCamTexture.devices;
-
-            _webCamTexture = new WebCamTexture(devices[0].name);
-            
-            _webCamTexture.Play();
-            
-            cascade = new CascadeClassifier(Application.dataPath+ @"/haarcascade_frontalface_default.xml");
-
-            StartCoroutine(FaceDetectorCoroutine());
-
-            GetComponent<Renderer>().material.mainTexture = _webCamTexture; // Display Cast
-        }
-
+        private Coroutine FaceDetectorCoroutine;
 
     #endregion
 
@@ -62,7 +44,29 @@ public class FaceDetector : MonoBehaviour
             }
         }
 
-        IEnumerator FaceDetectorCoroutine()
+        public void SetupCamera()
+        {
+            WebCamDevice[] devices = WebCamTexture.devices;
+
+            _webCamTexture = new WebCamTexture(devices[0].name);
+            
+            _webCamTexture.Play();
+            
+            cascade = new CascadeClassifier(Application.dataPath+ @"/haarcascade_frontalface_default.xml");
+
+            FaceDetectorCoroutine = StartCoroutine(FaceDetectorCameraActive());
+
+            GetComponent<Renderer>().material.mainTexture = _webCamTexture; // Display Cast
+        }
+
+        public void DeactivateCamera()
+        {
+            _webCamTexture.Stop();
+
+            StopCoroutine(FaceDetectorCoroutine);
+        }
+
+        IEnumerator FaceDetectorCameraActive()
         {
             while(true)
             {

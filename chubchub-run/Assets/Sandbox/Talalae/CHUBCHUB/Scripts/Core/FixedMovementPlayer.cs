@@ -40,6 +40,10 @@ public class FixedMovementPlayer : MonoBehaviour
         public Transform spawnPoint;
         
         public static float laneDistance;
+
+        private int matchRoundFetch;
+
+        private int matchTimer;
                 
         private float lastLaneChange;
 
@@ -68,6 +72,8 @@ public class FixedMovementPlayer : MonoBehaviour
         private CharacterController controller;
 
         private Coroutine HitObstacleCoroutine;
+
+        private Coroutine GameplayTimerCoroutine;
 
     #endregion
 
@@ -115,39 +121,6 @@ public class FixedMovementPlayer : MonoBehaviour
                     break;
             }
 
-            if(isGamePlaying)
-            {
-                if(Input.GetKeyDown(KeyCode.A))
-                {
-                    ChangeLaneTo("LEFT");
-                } 
-
-                if(Input.GetKeyDown(KeyCode.S))
-                {
-                    ActionRoll();
-                }
-
-                if(Input.GetKeyDown(KeyCode.D))
-                {
-                    ChangeLaneTo("RIGHT");
-                }
-
-                if(Input.GetKeyDown(KeyCode.B))
-                {
-                    EndGame();
-                }
-
-                if(Input.GetKeyDown(KeyCode.M))
-                {
-                    PlayerManager.Instance.LoadPlayer();
-                }
-
-                if(Input.GetKeyDown(KeyCode.N))
-                {
-                    PlayerManager.Instance.SavePlayerGameplay();
-                }
-            }
-
             Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
 
             switch(desiredLane)
@@ -188,7 +161,6 @@ public class FixedMovementPlayer : MonoBehaviour
                 {
                     HitObstacleCoroutine = StartCoroutine(HitObstacle(desiredLane));
                 }
-   
             }
         }
 
@@ -204,6 +176,10 @@ public class FixedMovementPlayer : MonoBehaviour
 
             backFrameFaceState = null;
 
+            matchTimer = 0;
+
+            FaceDetector.Instance.SetupCamera();
+
             StartGame();
         }
 
@@ -212,15 +188,37 @@ public class FixedMovementPlayer : MonoBehaviour
             isGamePlaying = true;
 
             currentSpeed = maxForwardSpeed;
+
+            GameplayTimerCoroutine = StartCoroutine(GameplayTimer());
+
+            MainUnityLifeCycle.Instance.APPSTATE_GameplayState();
         }
 
         public void EndGame()
         {
-            isGamePlaying = false;
-
-            currentSpeed = 0;
-
+            MainUnityLifeCycle.Instance.APPSTATE_EndgameState();
+            
             animator.Play("FinishGame");
+
+            isGamePlaying = false;
+            
+            currentSpeed = 0;
+            
+            matchRoundFetch = PlayerManager.Instance.MatchFetchingData();
+
+            PlayerManager.Instance.MatchItemFecth();
+
+            FaceDetector.Instance.DeactivateCamera();
+    
+            StopCoroutine(GameplayTimerCoroutine);
+
+            PlayerManager.Instance.AddMatchMaking(new MatchMaking { matchmaking_count = matchRoundFetch + 1, 
+                                                                    matchmaking_time = matchTimer, 
+                                                                    matchmaking_calories = GameplayUIManager.Instance.CalculateCaloriesWithFactor(matchTimer),
+                                                                    matchmaking_played_date = System.DateTime.Now.Day,
+                                                                    matchmaking_played_month = System.DateTime.Now.Month,
+                                                                    matchmaking_played_year = System.DateTime.Now.Year
+                                                                    });
 
             PlayerManager.Instance.SaveGameAfterEndGame();
         }
@@ -434,6 +432,23 @@ public class FixedMovementPlayer : MonoBehaviour
             isHitting = false;
             
             StopCoroutine(HitObstacleCoroutine);
+        }
+
+        IEnumerator GameplayTimer()
+        {
+            while(true)
+            {
+                yield return new WaitForSeconds(1f);
+
+                matchTimer += 1;
+                
+                GameplayUIManager.Instance.SyncDataTimer(matchTimer);
+
+                if(matchTimer == TimerManager.Instance.setupTimer)
+                {
+                    EndGame();
+                }
+            }
         }
 
     #endregion

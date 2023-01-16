@@ -6,7 +6,13 @@ public class Enumerators
         APP_INIT,
         APP_REGISTER,
         APP_MAINMENU,
+        APP_PREPARING,
+        APP_MATCH,
+        APP_INVENTORY,
+        APP_COSTUME,
         APP_LAUNCH,
+        APP_GAMEPLAY,
+        APP_ENDGAME,
         APP_SETTING
     }
 

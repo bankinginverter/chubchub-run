@@ -34,6 +34,21 @@ public static class SaveSystem
         stream.Close();
     }
 
+    public static void SavePlayerMatchData(PlayerManager playerManager)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string path = Application.persistentDataPath + "/player.MatchData";
+
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        PlayerMatchData data = new PlayerMatchData(playerManager);
+
+        formatter.Serialize(stream, data);
+
+        stream.Close();
+    }
+
     public static PlayerItemData LoadPlayerGameplay()
     {
         string path = Application.persistentDataPath + "/player.ItemData";
@@ -48,10 +63,14 @@ public static class SaveSystem
 
             stream.Close();
 
+            PlayerManager.Instance.InitialFileValidSetup(false);
+
             return data;
         }
         else
         {
+            PlayerManager.Instance.InitialFileValidSetup(true);
+
             return null;
         }
     }
@@ -78,6 +97,28 @@ public static class SaveSystem
         {
             MainUnityLifeCycle.Instance.SetNewPlayerState(true);
 
+            return null;
+        }
+    }
+
+    public static PlayerMatchData LoadPlayerMatch()
+    {
+        string path = Application.persistentDataPath + "/player.MatchData";
+
+        if(File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            PlayerMatchData data = formatter.Deserialize(stream) as PlayerMatchData;
+
+            stream.Close();
+
+            return data;
+        }
+        else
+        {
             return null;
         }
     }

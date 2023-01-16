@@ -9,6 +9,8 @@ public class GroupSelection : MonoBehaviour
 
         [SerializeField] private Button[] groupButton;
 
+        [SerializeField] private Sprite[] imageButton;
+
         private int inputSelected;
 
     #endregion
@@ -21,11 +23,11 @@ public class GroupSelection : MonoBehaviour
             {
                 if(i == inputSelected)
                 {
-                    groupButton[i].GetComponent<Image>().color = new Color32(0, 255, 37, 255);
+                    groupButton[i].GetComponent<Image>().sprite = imageButton[1];
                 }
                 else
                 {
-                    groupButton[i].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    groupButton[i].GetComponent<Image>().sprite = imageButton[0];
                 }
             }
         }

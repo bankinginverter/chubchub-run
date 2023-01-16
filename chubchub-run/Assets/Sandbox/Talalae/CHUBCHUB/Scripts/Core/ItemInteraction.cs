@@ -28,7 +28,7 @@ public class ItemInteraction : MonoBehaviour
 
         private void Update() 
         {
-            transform.Rotate(0, turnRate * Time.deltaTime, 0);  
+            transform.Rotate(0, turnRate * Time.deltaTime, 0);
         }
 
     #endregion

@@ -20,7 +20,11 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
         }
 
-        [HideInInspector] public List<Item> itemList;
+        [HideInInspector] public List<Item> GAME_itemList;
+
+        private List<Item> MATCH_itemList;
+        
+        [HideInInspector] public List<MatchMaking> matchList;
 
         [HideInInspector] public string PlayerNameData;
 
@@ -31,6 +35,8 @@ public class PlayerManager : MonoBehaviour
         [HideInInspector] public string HeightData;
 
         [HideInInspector] public string AgeData;
+        
+        private bool initialFileValid;
 
     #endregion
 
@@ -38,7 +44,11 @@ public class PlayerManager : MonoBehaviour
 
         private void Start() 
         {
-            itemList = new List<Item>();
+            GAME_itemList = new List<Item>();
+
+            MATCH_itemList = new List<Item>();
+
+            matchList = new List<MatchMaking>();
         }
 
     #endregion
@@ -49,7 +59,7 @@ public class PlayerManager : MonoBehaviour
         {
             bool itemAlreadyInInventory = false;
 
-            foreach(Item inventoryItem in itemList)
+            foreach(Item inventoryItem in GAME_itemList)
             {
                 if(inventoryItem.itemType == item.itemType)
                 {
@@ -60,36 +70,88 @@ public class PlayerManager : MonoBehaviour
             }
             if(!itemAlreadyInInventory)
             {
-                itemList.Add(item);
+                GAME_itemList.Add(item);
             }
+        } 
+
+        public void AddMatchMaking(MatchMaking matchMaking)
+        {
+            matchList.Add(matchMaking);
         }
 
-        public void SavePlayerGameplay()
+        public int MatchFetchingData()
         {
-            SaveSystem.SavePlayerGameplay(this);
-        }
+            PlayerMatchData matchdata = SaveSystem.LoadPlayerMatch();
 
-        public void LoadPlayer()
-        {
-            PlayerItemData data = SaveSystem.LoadPlayerGameplay();
-
-            for(int i = 0; i < data.itemListData.Count; i++)
+            if(matchdata != null)
             {
-                Debug.Log(data.itemListData[i].itemType + " amount : " + data.itemListData[i].amount);
+                return matchdata.matchListData.Count;
             }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public void MatchItemFecth()
+        {
+            MATCH_itemList = GAME_itemList;
+        }
+
+        public int ItemFetchingData()
+        {
+            PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+            if(itemdata != null)
+            {
+                return itemdata.itemListData.Count;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public string SpecificItemData_NAME(int index)
+        {
+            PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+            return itemdata.itemListData[index].itemType.ToString();
+        }
+
+        public int SpecificItemData_AMOUNT(int index)
+        {
+            PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+            return itemdata.itemListData[index].amount;
         }
 
         public void SaveGameAfterEndGame()
         {
             #region LoadGameData
 
-                PlayerItemData data = SaveSystem.LoadPlayerGameplay();
+                PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+                PlayerMatchData matchdata = SaveSystem.LoadPlayerMatch();
 
             #endregion
 
             #region ImplementNewData
 
-                List<Item> itemListToSave = itemList.Union<Item>(data.itemListData).ToList<Item>();
+                GameplayUIManager.Instance.EndGameResultUI(matchList[0].matchmaking_time, matchList[0].matchmaking_count);
+
+                if(initialFileValid)
+                {
+                    SaveSystem.SavePlayerGameplay(this);
+
+                    SaveSystem.SavePlayerMatchData(this);
+
+                    return;
+                }
+
+                List<MatchMaking> matchListToSave = matchdata.matchListData.Union<MatchMaking>(matchList).ToList<MatchMaking>();
+
+                List<Item> itemListToSave = GAME_itemList.Union<Item>(itemdata.itemListData).ToList<Item>();
 
                 for(int i = 0; i < itemListToSave.Count; i++)
                 {
@@ -103,11 +165,14 @@ public class PlayerManager : MonoBehaviour
                         }
                     }
                 }
-                itemList = itemListToSave;
 
-                for(int i = 0; i < itemList.Count; i++)
+                GAME_itemList = itemListToSave;
+
+                matchList = matchListToSave;
+
+                for(int i = 0; i < GAME_itemList.Count; i++)
                 {
-                    Debug.Log(itemList[i].itemType + " amount " + itemList[i].amount);
+                    Debug.Log(GAME_itemList[i].itemType + " amount " + GAME_itemList[i].amount);
                 }
 
             #endregion
@@ -116,25 +181,17 @@ public class PlayerManager : MonoBehaviour
 
                 SaveSystem.SavePlayerGameplay(this);
 
+                SaveSystem.SavePlayerMatchData(this);
+
             #endregion
         }
 
-        public void SavePlayerHealthData()
+        public void InitialFileValidSetup(bool index)
         {
-            SaveSystem.SavePlayerHealthData(this);
+            initialFileValid = index;
         }
 
-        public void LoadPlayerHealth()
-        {
-            PlayerHealthData data = SaveSystem.LoadPlayerHealth();
-
-            if(data != null)
-            {
-                StartDataRetrieve(data);
-            }
-        }
-
-        public void StartDataRetrieve(PlayerHealthData data)
+        public void StartHealthDataRetrieve(PlayerHealthData data)
         {
             PlayerNameData = data.player_Name;
 
@@ -164,7 +221,61 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    #region Saving Methods
 
-            
+        public void SavePlayerGameplay()
+        {
+            SaveSystem.SavePlayerGameplay(this);
+        }
 
+        public void SavePlayerHealthData()
+        {
+            SaveSystem.SavePlayerHealthData(this);
+        }
+
+        public void SavePlayerMatchData()
+        {
+            SaveSystem.SavePlayerMatchData(this);
+        }
+    
+    #endregion
+
+    #region Loading Methods
+
+        public void LoadPlayer()
+        {
+            PlayerItemData data = SaveSystem.LoadPlayerGameplay();
+
+            for(int i = 0; i < data.itemListData.Count; i++)
+            {
+                Debug.Log(data.itemListData[i].itemType + " amount : " + data.itemListData[i].amount);
+            }
+        }
+
+        public void LoadPlayerHealth()
+        {
+            PlayerHealthData data = SaveSystem.LoadPlayerHealth();
+
+            if(data != null)
+            {
+                StartHealthDataRetrieve(data);
+            }
+        }
+
+        public void LoadPlayerMatch(int index, out int timeRound, out float caloriesRound, out int day, out int month, out int year)
+        {
+            PlayerMatchData data = SaveSystem.LoadPlayerMatch();
+
+            timeRound = data.matchListData[index].matchmaking_time;
+
+            caloriesRound = data.matchListData[index].matchmaking_calories;
+
+            day = data.matchListData[index].matchmaking_played_date;
+
+            month = data.matchListData[index].matchmaking_played_month;
+
+            year = data.matchListData[index].matchmaking_played_year;
+        }
+    
+    #endregion
 }
