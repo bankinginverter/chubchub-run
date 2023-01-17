@@ -15,6 +15,17 @@ public class GroupSelection : MonoBehaviour
 
     #endregion
 
+    #region Unity Methods
+
+        private void Start() 
+        {
+            OnSelectedButton(0);
+
+            ContextTheGroup("BOY");
+        }
+
+    #endregion
+
     #region Private Methods
 
         public void SelectInputField()

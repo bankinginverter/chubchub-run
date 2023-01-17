@@ -39,7 +39,13 @@ public class AppUIManager : MonoBehaviour
 
         [SerializeField] private GameObject costumeScreenComponent;
 
-        [Header("Retrieve Data Section")]
+        [Header("Progress Loading Section")]
+
+        [SerializeField] private Slider progressLoadingBar;
+
+        [SerializeField] private TMP_Text progressLoadingText;
+
+        [Header("Register Screen Section")]
 
         private Coroutine checkingPlayerInputCoroutine;
 
@@ -53,13 +59,9 @@ public class AppUIManager : MonoBehaviour
 
         private string genderRetrieved;
 
+        private int costumeRetrieved;
+
         [SerializeField] private GameObject confirmDataButton;
-
-        [Header("Progress Loading Section")]
-
-        [SerializeField] private Slider progressLoadingBar;
-
-        [SerializeField] private TMP_Text progressLoadingText;
 
         [Header("MainMenu Screen Section")]
 
@@ -69,7 +71,9 @@ public class AppUIManager : MonoBehaviour
 
         [SerializeField] private TMP_Text playRound;
 
-        [SerializeField] private GameObject gameObjectElement;
+        [SerializeField] private GameObject[] gameObjectElement;
+
+        private int mapIndex;
 
         [Header("Preparing Screen Section")]
 
@@ -107,6 +111,12 @@ public class AppUIManager : MonoBehaviour
 
         private int imageIndex;
 
+        [Header("Transform Section")]
+
+        [SerializeField] private Transform spawnpoint_mainmenu;
+
+        [SerializeField] private Transform spawnpoint_customize;
+
     #endregion
 
     #region Application UI Management
@@ -127,13 +137,22 @@ public class AppUIManager : MonoBehaviour
 
                 inventoryScreenComponent.SetActive(false);
 
-                //costumeScreenComponent.SetActive(false);
+                costumeScreenComponent.SetActive(false);
 
             #endregion
 
             #region GameObject Management
 
-                gameObjectElement.SetActive(false);
+                for(int i = 0; i < gameObjectElement.Length; i++)
+                {
+                    gameObjectElement[i].SetActive(false);
+                }
+
+                CostumeManager.Instance.SetActivePlayerModel(false);
+
+                CostumeManager.Instance.SetActiveMalePlayer(false);
+
+                CostumeManager.Instance.SetActiveFemalePlayer(false);
 
             #endregion
         }
@@ -150,13 +169,23 @@ public class AppUIManager : MonoBehaviour
         public void SetActiveRegisterScreenPanel()
         {
             registerScreenComponent.SetActive(true);
+
+            CostumeManager.Instance.SetActivePlayerModel(true);
+
+            CostumeManager.Instance.TransformPlayerTo(spawnpoint_customize);
         }
 
         public void SetActiveMainmenuScreenPanel()
         {
             mainmenuScreenComponent.SetActive(true);
 
-            gameObjectElement.SetActive(true);
+            mapIndex = 0;
+
+            CostumeManager.Instance.SetActivePlayerModel(true);
+
+            CostumeManager.Instance.TransformPlayerTo(spawnpoint_mainmenu);
+
+            gameObjectElement[mapIndex].SetActive(true);
         }
 
         public void SetActivePreparingGameplayScreenPanel()
@@ -195,7 +224,7 @@ public class AppUIManager : MonoBehaviour
         {
             StopCoroutine(checkingPlayerInputCoroutine);
             
-            PlayerManager.Instance.SyncHealthDataFromRegister(nameRetrieved, weightRetrieved, heightRetrieved, ageRetrieved, genderRetrieved);
+            PlayerManager.Instance.SyncHealthDataFromRegister(nameRetrieved, weightRetrieved, heightRetrieved, ageRetrieved, genderRetrieved, costumeRetrieved);
 
             MainUnityLifeCycle.Instance.APPSTATE_MainMenuDisplayState();
         }
@@ -208,6 +237,8 @@ public class AppUIManager : MonoBehaviour
         
             playRound.text =  PlayerManager.Instance.MatchFetchingData().ToString();
         }
+
+        
 
         public void SyncTimerTextWithGUI()
         {
@@ -398,7 +429,7 @@ public class AppUIManager : MonoBehaviour
 
     #endregion
 
-    #region Data Retrieve UI
+    #region Data SendRetrieve UI
 
         public void ReadStringNameInput(string index)
         {
@@ -423,6 +454,16 @@ public class AppUIManager : MonoBehaviour
         public void ReadStringGenderInput(string index)
         {
             genderRetrieved = index;
+        }
+
+        public void ReadIntCostumeInput(int index)
+        {
+            costumeRetrieved = index;
+        }
+
+        public string SendStringGenderInput()
+        {
+            return genderRetrieved;
         }
  
     #endregion

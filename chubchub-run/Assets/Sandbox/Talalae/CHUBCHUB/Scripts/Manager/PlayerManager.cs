@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
         [HideInInspector] public string HeightData;
 
         [HideInInspector] public string AgeData;
+
+        [HideInInspector] public int CostumeData;
         
         private bool initialFileValid;
 
@@ -202,9 +204,11 @@ public class PlayerManager : MonoBehaviour
             AgeData = data.player_Age;
             
             GenderData = data.player_Gender;
+
+            CostumeData = data.player_Costume;
         }
 
-        public void SyncHealthDataFromRegister(string nameIndex, string weightIndex, string heightIndex, string ageIndex, string genderIndex)
+        public void SyncHealthDataFromRegister(string nameIndex, string weightIndex, string heightIndex, string ageIndex, string genderIndex, int costumeIndex)
         {
             PlayerNameData = nameIndex;
 
@@ -215,6 +219,8 @@ public class PlayerManager : MonoBehaviour
             AgeData = ageIndex;
             
             GenderData = genderIndex;
+
+            CostumeData = costumeIndex;
 
             SavePlayerHealthData();
         }

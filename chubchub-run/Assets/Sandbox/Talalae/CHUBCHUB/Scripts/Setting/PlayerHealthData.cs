@@ -15,6 +15,8 @@ public class PlayerHealthData
     public string player_Height;
 
     public string player_Age;
+
+    public int player_Costume;
     
     public PlayerHealthData (PlayerManager playerManager)    
     {
@@ -27,5 +29,7 @@ public class PlayerHealthData
         player_Height = PlayerManager.Instance.HeightData;
 
         player_Age = PlayerManager.Instance.AgeData;
+
+        player_Costume = PlayerManager.Instance.CostumeData;
     }
 }

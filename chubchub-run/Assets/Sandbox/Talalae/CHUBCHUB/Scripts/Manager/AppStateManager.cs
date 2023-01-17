@@ -60,7 +60,7 @@ public class AppStateManager
                         AppUIManager.Instance.CloseAllComponent();
                         AppUIManager.Instance.SetActiveRegisterScreenPanel();
                         AppUIManager.Instance.CheckPlayerInput();
-                        
+                        CostumeManager.Instance.ResetGenderCostume("BOY");
                         
                         break;
 
@@ -74,6 +74,7 @@ public class AppStateManager
                         AppUIManager.Instance.SetActiveMainmenuScreenPanel();
                     
                         AppUIManager.Instance.SetupMainMenuUI();
+                        CostumeManager.Instance.ChangeCostumeTo(PlayerManager.Instance.CostumeData, PlayerManager.Instance.GenderData);
                         
                         break;
 
@@ -144,6 +145,9 @@ public class AppStateManager
                         //Runtime Function Region
                         GameplayUIManager.Instance.CloseAllComponent();
                         GameplayUIManager.Instance.SetActiveGameplayScreenPanel();
+
+                        PlayerManager.Instance.LoadPlayerHealth();
+                        CostumeManager.Instance.ChangeCostumeTo(PlayerManager.Instance.CostumeData, PlayerManager.Instance.GenderData);
 
                         break;
 
