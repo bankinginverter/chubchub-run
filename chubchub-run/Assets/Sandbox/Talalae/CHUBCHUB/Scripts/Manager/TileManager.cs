@@ -6,7 +6,24 @@ public class TileManager : MonoBehaviour
 {
     #region Unity Declarations
 
+        public static TileManager Instance;
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
+
+        [Header("Spawn Tile Section")]
+
         [SerializeField] private GameObject[] tilePrefabs;
+
+        private int tilefactor;
 
         [Header("Spawn Tile Section")]
 
@@ -46,6 +63,8 @@ public class TileManager : MonoBehaviour
 
         private Coroutine DestroyPreparingPhaseObjectCoroutine;
 
+        private string mapName;
+
     #endregion
 
     #region Unity Methods
@@ -54,16 +73,14 @@ public class TileManager : MonoBehaviour
         {
             DestroyPreparingPhaseObjectCoroutine = StartCoroutine(DestroyPreparingPhaseObject());
 
-            GetLaneDistanceCoroutine = StartCoroutine(GetLaneDistance());
-            
-            SetupTileSpawner();
+            GetLaneDistanceCoroutine = StartCoroutine(GetLaneDistance()); 
         }   
 
         private void Update() 
         {
             if(playerTransform.position.z - (offsetPlayerDestroyTransform + preparingOffset) > spawnPosition - (spawnedTiles * tileLength))
             {
-                SpawnTile(Random.Range(0, tilePrefabs.Length));
+                SpawnTile(Random.Range(tilefactor, (tilefactor + 19)));
 
                 DeleteTile();
             }
@@ -81,14 +98,71 @@ public class TileManager : MonoBehaviour
             {
                 if(i == 0)
                 {
-                    SpawnTile(0);
+                    SpawnTile(tilefactor);
                 }
                 else
                 {
-                    SpawnTile(Random.Range(0, tilePrefabs.Length));
+                    SpawnTile(Random.Range(tilefactor, (tilefactor + 19)));
                 }
             }
         }
+
+        public void SetupPreparingAsset()
+        {
+            for(int i = 0; i < 2; i++)
+            {
+                preparingAsset.transform.GetChild(i).gameObject.SetActive(false);
+            }
+            
+            switch(mapName)
+            {
+                case "FOREST":
+
+                    preparingAsset.transform.GetChild(0).gameObject.SetActive(true);
+                    
+                    break;
+
+                case "BEACH":
+
+                    preparingAsset.transform.GetChild(1).gameObject.SetActive(true);
+                    
+                    break;
+
+                case "CITY":
+
+                    
+                    
+                    break;
+            }
+        }
+
+        public void SettingTileFactor(string index)
+        {
+            mapName = index;
+
+            switch(index)
+            {
+                case "FOREST":
+
+                    tilefactor = 0;
+                    
+                    break;
+
+                case "BEACH":
+
+                    tilefactor = 19;
+                    
+                    break;
+
+                case "CITY":
+
+                    tilefactor = 38;
+                    
+                    break;
+            }
+        }
+
+
     
         public void SpawnTile(int tileIndex)
         {

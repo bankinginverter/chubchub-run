@@ -11,7 +11,7 @@ public class FaceDetector : MonoBehaviour
         
         private CascadeClassifier cascade;
 
-        OpenCvSharp.Rect MyFace; // Display Cast
+        // OpenCvSharp.Rect MyFace; // Display Cast
 
         public static FaceDetector Instance;
 
@@ -40,7 +40,7 @@ public class FaceDetector : MonoBehaviour
             {
                 FacePosition.CheckDirectionX(faces[0].Location.X);
 
-                MyFace = faces[0]; // Display Cast
+                // MyFace = faces[0]; // Display Cast
             }
         }
 
@@ -56,7 +56,7 @@ public class FaceDetector : MonoBehaviour
 
             FaceDetectorCoroutine = StartCoroutine(FaceDetectorCameraActive());
 
-            GetComponent<Renderer>().material.mainTexture = _webCamTexture; // Display Cast
+            // GetComponent<Renderer>().material.mainTexture = _webCamTexture; // Display Cast
         }
 
         public void DeactivateCamera()
@@ -74,24 +74,24 @@ public class FaceDetector : MonoBehaviour
 
                 findNewFace(frame); 
                 
-                display(frame); // Display Cast
+                // display(frame); // Display Cast
 
                 yield return new WaitForSeconds(.15f);
             }
         }
 
         // Display Cast Function
-        void display(Mat frame)
-        {
-            if(MyFace != null)
-            {
-                frame.Rectangle(MyFace, new Scalar(250, 0, 0), 2);
-            }
+        // void display(Mat frame)
+        // {
+        //     if(MyFace != null)
+        //     {
+        //         frame.Rectangle(MyFace, new Scalar(250, 0, 0), 2);
+        //     }
 
-            Texture newTexture = OpenCvSharp.Unity.MatToTexture(frame);
+        //     Texture newTexture = OpenCvSharp.Unity.MatToTexture(frame);
 
-            GetComponent<Renderer>().material.mainTexture = newTexture;
-        }
+        //     GetComponent<Renderer>().material.mainTexture = newTexture;
+        // }
 
     #endregion
 }

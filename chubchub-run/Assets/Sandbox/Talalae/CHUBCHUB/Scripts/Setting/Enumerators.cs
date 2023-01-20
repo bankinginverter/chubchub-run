@@ -9,7 +9,7 @@ public class Enumerators
         APP_PREPARING,
         APP_MATCH,
         APP_INVENTORY,
-        APP_COSTUME,
+        APP_MAP,
         APP_LAUNCH,
         APP_GAMEPLAY,
         APP_ENDGAME,

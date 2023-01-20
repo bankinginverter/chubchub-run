@@ -37,7 +37,7 @@ public class AppUIManager : MonoBehaviour
 
         [SerializeField] private GameObject inventoryScreenComponent;
 
-        [SerializeField] private GameObject costumeScreenComponent;
+        [SerializeField] private GameObject mapSelectingScreenComponent;
 
         [Header("Progress Loading Section")]
 
@@ -111,6 +111,14 @@ public class AppUIManager : MonoBehaviour
 
         private int imageIndex;
 
+        [Header("Select Map Screen Section")]
+
+        [HideInInspector] public string mapSelectedFromMenu;
+
+        [SerializeField] private GameObject selectedUI;
+
+        [SerializeField] private Transform[] mapSelectPosition;
+
         [Header("Transform Section")]
 
         [SerializeField] private Transform spawnpoint_mainmenu;
@@ -137,7 +145,7 @@ public class AppUIManager : MonoBehaviour
 
                 inventoryScreenComponent.SetActive(false);
 
-                costumeScreenComponent.SetActive(false);
+                mapSelectingScreenComponent.SetActive(false);
 
             #endregion
 
@@ -179,8 +187,6 @@ public class AppUIManager : MonoBehaviour
         {
             mainmenuScreenComponent.SetActive(true);
 
-            mapIndex = 0;
-
             CostumeManager.Instance.SetActivePlayerModel(true);
 
             CostumeManager.Instance.TransformPlayerTo(spawnpoint_mainmenu);
@@ -203,9 +209,9 @@ public class AppUIManager : MonoBehaviour
             inventoryScreenComponent.SetActive(true);
         }
 
-        public void SetActiveCostumeScreenPanel()
+        public void SetActiveMapSelectingScreenPanel()
         {
-            costumeScreenComponent.SetActive(true);
+            mapSelectingScreenComponent.SetActive(true);
         }
 
         public void SetLoadingProgression(float index)
@@ -238,7 +244,36 @@ public class AppUIManager : MonoBehaviour
             playRound.text =  PlayerManager.Instance.MatchFetchingData().ToString();
         }
 
-        
+        public void CopySelectedMapData()
+        {
+            AppStateManager.mapSelectedFromAppState = mapSelectedFromMenu;
+        }
+
+        public void SetDataMapSelectedFromMenuVariable(string index)
+        {
+            mapSelectedFromMenu = index;
+
+            switch(mapSelectedFromMenu)
+            {
+                case "FOREST":
+
+                    mapIndex = 0;    
+
+                    break;
+
+                case "BEACH":
+
+                    mapIndex = 1;
+
+                    break;
+
+                case "CITY":
+
+                    mapIndex = 2;
+
+                    break;
+            }
+        }
 
         public void SyncTimerTextWithGUI()
         {
@@ -277,6 +312,30 @@ public class AppUIManager : MonoBehaviour
             for(int i = 0; i < graphDataIndex.Length; i++)
             {
                 graphDataIndex[i].value = 0;
+            }
+        }
+
+        public void FetchPositionOfSelectedMap()
+        {
+            switch(mapSelectedFromMenu)
+            {
+                case "FOREST":
+
+                    selectedUI.transform.position = mapSelectPosition[0].transform.position;
+
+                    break;
+
+                case "BEACH":
+
+                    selectedUI.transform.position = mapSelectPosition[1].transform.position;
+
+                    break;
+
+                case "CITY":
+
+                    selectedUI.transform.position = mapSelectPosition[2].transform.position;
+
+                    break;
             }
         }
 

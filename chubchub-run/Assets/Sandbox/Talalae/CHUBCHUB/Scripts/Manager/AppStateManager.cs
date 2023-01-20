@@ -6,6 +6,8 @@ public class AppStateManager
 
         public event Action<Enumerators.AppState> OnAppStateChanged;
 
+        public static string mapSelectedFromAppState;
+
         private static readonly object Sync = new object();
         
         private static AppStateManager _instance;
@@ -48,6 +50,7 @@ public class AppStateManager
                         AppUIManager.Instance.CloseAllComponent();
                         AppUIManager.Instance.SetActiveLoadingScreenPanel();
                         MainUnityLifeCycle.Instance.LoadInitialGameData();
+                        AppUIManager.Instance.SetDataMapSelectedFromMenuVariable("FOREST");
                         
                         break;
 
@@ -75,6 +78,17 @@ public class AppStateManager
                     
                         AppUIManager.Instance.SetupMainMenuUI();
                         CostumeManager.Instance.ChangeCostumeTo(PlayerManager.Instance.CostumeData, PlayerManager.Instance.GenderData);
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_MAP:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveMapSelectingScreenPanel();
                         
                         break;
 
@@ -115,17 +129,6 @@ public class AppStateManager
                         
                         break;
 
-                    case Enumerators.AppState.APP_COSTUME:
-
-                        //Debug Region
-                        DebugStateManager.Instance.DebugAppStateChanged(index); 
-
-                        //Runtime Function Region
-                        AppUIManager.Instance.CloseAllComponent();
-                        AppUIManager.Instance.SetActiveCostumeScreenPanel();
-                        
-                        break;
-
                     case Enumerators.AppState.APP_LAUNCH:
                     
                         //Debug Region
@@ -133,6 +136,7 @@ public class AppStateManager
 
                         //Runtime Function Region
                         AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.CopySelectedMapData();
                         SceneControllerManager.Instance.LoadGameScene("SCENE_GAMEPLAY");
 
                         break;
@@ -148,6 +152,9 @@ public class AppStateManager
 
                         PlayerManager.Instance.LoadPlayerHealth();
                         CostumeManager.Instance.ChangeCostumeTo(PlayerManager.Instance.CostumeData, PlayerManager.Instance.GenderData);
+                        TileManager.Instance.SettingTileFactor(mapSelectedFromAppState);
+                        TileManager.Instance.SetupPreparingAsset();
+                        TileManager.Instance.SetupTileSpawner();
 
                         break;
 

@@ -119,9 +119,9 @@ public class MainUnityLifeCycle : MonoBehaviour
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_INVENTORY);
         }
 
-        public void APPSTATE_CostumeState()
+        public void APPSTATE_SelectMapState()
         {
-            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_COSTUME);
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MAP);
         }
 
         public void APPSTATE_LaunchGameState()
