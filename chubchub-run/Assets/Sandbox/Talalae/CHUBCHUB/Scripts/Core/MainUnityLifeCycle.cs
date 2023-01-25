@@ -124,6 +124,11 @@ public class MainUnityLifeCycle : MonoBehaviour
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MAP);
         }
 
+        public void APPSTATE_KitchenState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_KITCHEN_CHOOSE);
+        }
+
         public void APPSTATE_LaunchGameState()
         {
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_LAUNCH);

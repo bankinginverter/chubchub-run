@@ -25,7 +25,9 @@ public class FixedMovementPlayer : MonoBehaviour
 
         [SerializeField] private float maxForwardSpeed = 10f;
         
-        [SerializeField] private float laneChangeCooldown = 0.5f;
+        [SerializeField] private float laneChangeCooldown = 0.25f;
+
+        [SerializeField] private  float runChangeCooldown = 0.5f;
 
         [SerializeField] private float rollCooldown = 1.5f;
         
@@ -46,6 +48,8 @@ public class FixedMovementPlayer : MonoBehaviour
         private int matchTimer;
                 
         private float lastLaneChange;
+
+        private float lastRunChange;
 
         private float lastRoll;
 
@@ -121,6 +125,21 @@ public class FixedMovementPlayer : MonoBehaviour
                     break;
             }
 
+            switch(EnumulatorFaceState.FaceRunState)
+            {
+                case EnumulatorFaceState.FaceVerticalState.RUN:
+
+                    ChangeRunStateWithCam(true);
+
+                    break;
+
+                case EnumulatorFaceState.FaceVerticalState.IDLE:
+
+                    ChangeRunStateWithCam(false);
+
+                    break;
+            }
+
             Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
 
             switch(desiredLane)
@@ -186,8 +205,6 @@ public class FixedMovementPlayer : MonoBehaviour
         public void StartGame()
         {
             isGamePlaying = true;
-
-            currentSpeed = maxForwardSpeed;
 
             GameplayTimerCoroutine = StartCoroutine(GameplayTimer());
 
@@ -255,6 +272,35 @@ public class FixedMovementPlayer : MonoBehaviour
             controller.height = runHeight;
 
             controller.center = new Vector3 (0, 0, 0);
+        }
+
+        public void ChangeRunStateWithCam(bool index)
+        {
+            if(isRolling || isHitting)
+            {
+                return;
+            }
+
+            if(!isGamePlaying)
+            {
+                return;
+            }
+
+            if(index)
+            {
+                currentSpeed = maxForwardSpeed;
+
+                lastRunChange = Time.time;
+            }
+            else
+            {
+                if(Time.time - lastRunChange <= runChangeCooldown)
+                {
+                    return;
+                }
+
+                currentSpeed = 0;
+            }
         }
 
         public void ChangeLaneToWithCam(EnumulatorFaceState.FaceDetecState index)
@@ -420,14 +466,7 @@ public class FixedMovementPlayer : MonoBehaviour
 
             currentSpeed = 0;
 
-            yield return new WaitForSeconds(3f);
-
-            if(isGamePlaying)
-            {
-                currentSpeed = maxForwardSpeed;
-            }
-            
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(3.25f);
 
             isHitting = false;
             

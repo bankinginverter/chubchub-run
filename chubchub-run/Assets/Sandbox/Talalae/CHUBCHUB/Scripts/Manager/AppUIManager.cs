@@ -39,6 +39,8 @@ public class AppUIManager : MonoBehaviour
 
         [SerializeField] private GameObject mapSelectingScreenComponent;
 
+        [SerializeField] private GameObject kitchenScreenComponent;
+
         [Header("Progress Loading Section")]
 
         [SerializeField] private Slider progressLoadingBar;
@@ -74,6 +76,18 @@ public class AppUIManager : MonoBehaviour
         [SerializeField] private GameObject[] gameObjectElement;
 
         private int mapIndex;
+
+        [Header("Kitchen Screen Section")]
+
+        [SerializeField] private GameObject ChooseRecipeComponent;
+
+        [SerializeField] private GameObject CookingProcessComponent;
+
+        [SerializeField] private GameObject CookingResultComponent;
+
+        [SerializeField] private GameObject[] RecipeComponent;
+
+        private int[] recipeValue;
 
         [Header("Preparing Screen Section")]
 
@@ -147,6 +161,8 @@ public class AppUIManager : MonoBehaviour
 
                 mapSelectingScreenComponent.SetActive(false);
 
+                kitchenScreenComponent.SetActive(false);
+
             #endregion
 
             #region GameObject Management
@@ -212,6 +228,11 @@ public class AppUIManager : MonoBehaviour
         public void SetActiveMapSelectingScreenPanel()
         {
             mapSelectingScreenComponent.SetActive(true);
+        }
+
+        public void SetActiveKitchenScreenPanel()
+        {
+            kitchenScreenComponent.SetActive(true);
         }
 
         public void SetLoadingProgression(float index)
@@ -312,6 +333,224 @@ public class AppUIManager : MonoBehaviour
             for(int i = 0; i < graphDataIndex.Length; i++)
             {
                 graphDataIndex[i].value = 0;
+            }
+        }
+
+        public void VerifyCookingRecipe()
+        {
+            PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+            if(itemdata == null)
+            {
+                for(int i = 0; i < 3; i++)
+                {
+                    RecipeComponent[i].transform.GetChild(1).gameObject.SetActive(false);
+
+                    RecipeComponent[i].transform.GetChild(2).gameObject.SetActive(true);
+                }
+                
+                Debug.Log("No match Found");
+                
+                return;
+            }
+
+            recipeValue = new int[3];
+
+            for(int i = 0; i < 3; i++)
+            {
+                recipeValue[i] = 0;
+            }
+
+            for(int i = 0; i < itemdata.itemListData.Count; i++)
+            {
+                switch(itemdata.itemListData[i].itemType)
+                {
+                    case Item.ItemType.INGREDIANT_BASIL:
+                    
+                        if(itemdata.itemListData[i].amount >= 1)
+                        {
+                            recipeValue[1]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CABBAGE:
+                    
+                        if(itemdata.itemListData[i].amount >= 30)
+                        {
+                            recipeValue[0]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CARROT:
+                    
+                        if(itemdata.itemListData[i].amount >= 5)
+                        {
+                            recipeValue[0]++;
+
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CELERY:
+                    
+                        if(itemdata.itemListData[i].amount >= 7)
+                        {
+                            recipeValue[0]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CHICKEN:
+                    
+                        if(itemdata.itemListData[i].amount >= 10)
+                        {
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CHILI:
+                    
+                        if(itemdata.itemListData[i].amount >= 1)
+                        {
+                            recipeValue[1]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CORN:
+                    
+                        if(itemdata.itemListData[i].amount >= 5)
+                        {
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CUCUMBER:
+                    
+                        if(itemdata.itemListData[i].amount >= 5)
+                        {
+                            recipeValue[1]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_EGG:
+                    
+                        if(itemdata.itemListData[i].amount >= 1)
+                        {
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_GALIC:
+                    
+                        if(itemdata.itemListData[i].amount >= 1)
+                        {
+                            recipeValue[1]++;
+
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_PEAS:
+                    
+                        if(itemdata.itemListData[i].amount >= 5)
+                        {
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_PORK:
+                    
+                        if(itemdata.itemListData[i].amount >= 5)
+                        {
+                            recipeValue[0]++;
+                        }
+
+                        if(itemdata.itemListData[i].amount >= 20)
+                        {
+                            recipeValue[1]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_RICE:
+                    
+                        if(itemdata.itemListData[i].amount >= 8)
+                        {
+                            recipeValue[0]++;
+                        }
+
+                        if(itemdata.itemListData[i].amount >= 15)
+                        {
+                            recipeValue[1]++;
+
+                            recipeValue[2]++;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_TOFU:
+                    
+                        if(itemdata.itemListData[i].amount >= 1)
+                        {
+                            recipeValue[0]++;
+                        }
+
+                        break;
+                }
+            }
+
+            VerifyAmountRecipe();
+        }
+
+        public void VerifyAmountRecipe()
+        {
+            if(recipeValue[0] == 6)
+            {
+                RecipeComponent[0].transform.GetChild(1).gameObject.SetActive(true);
+
+                RecipeComponent[0].transform.GetChild(2).gameObject.SetActive(false);
+            }
+            else
+            {
+                RecipeComponent[0].transform.GetChild(1).gameObject.SetActive(false);
+
+                RecipeComponent[0].transform.GetChild(2).gameObject.SetActive(true);
+            }
+
+            if(recipeValue[1] == 6)
+            {
+                RecipeComponent[1].transform.GetChild(1).gameObject.SetActive(true);
+
+                RecipeComponent[1].transform.GetChild(2).gameObject.SetActive(false);
+            }
+            else
+            {
+                RecipeComponent[1].transform.GetChild(1).gameObject.SetActive(false);
+
+                RecipeComponent[1].transform.GetChild(2).gameObject.SetActive(true);
+            }
+
+            if(recipeValue[2] == 7)
+            {
+                RecipeComponent[2].transform.GetChild(1).gameObject.SetActive(true);
+
+                RecipeComponent[2].transform.GetChild(2).gameObject.SetActive(false);
+            }
+            else
+            {
+                RecipeComponent[2].transform.GetChild(1).gameObject.SetActive(false);
+
+                RecipeComponent[2].transform.GetChild(2).gameObject.SetActive(true);
             }
         }
 
@@ -428,6 +667,41 @@ public class AppUIManager : MonoBehaviour
 
                     break;
             }
+        }
+
+        public void ActiveKitchenScreen(string index)
+        {
+            DeactiveKitchenScreen();
+
+            switch(index)
+            {
+                case "CHOOSE":
+
+                    ChooseRecipeComponent.SetActive(true);
+
+                    break;
+
+                case "COOK":
+
+                    CookingProcessComponent.SetActive(true);
+
+                    break;
+
+                case "RESULT":
+
+                    CookingResultComponent.SetActive(true);
+
+                    break;
+            }
+        }
+
+        private void DeactiveKitchenScreen()
+        {
+            ChooseRecipeComponent.SetActive(false);
+
+            CookingProcessComponent.SetActive(false);
+
+            CookingResultComponent.SetActive(false);
         }
 
         private int CalculateMonthToDay(int index_month, int index_year)

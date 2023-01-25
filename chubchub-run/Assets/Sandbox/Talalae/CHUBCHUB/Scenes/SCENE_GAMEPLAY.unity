@@ -5273,13 +5273,25 @@ MonoBehaviour:
   spawnedTiles: 5
   playerTransform: {fileID: 1393629587}
   offsetPlayerDestroyTransform: 25
-  maxAmountOfGenerateItem: 4
+  minAmountOfGenerateItem: 1
+  maxAmountOfGenerateItem: 6
   spawnedRange: 10
   floatItemOffset: 0.75
   ingrediantPrefabs:
   - {fileID: 354955010861428503, guid: 3df7f8e600a551a439463dc75490dfb1, type: 3}
-  - {fileID: 8668521632030408339, guid: b7571e5b2f782b1448d8f44cd12f9cbc, type: 3}
   - {fileID: 1336425314267441965, guid: 676a65b72e6b10046b36e39facf545ba, type: 3}
+  - {fileID: 8668521632030408339, guid: c172482cb91f08b4a91891fe5049b0ed, type: 3}
+  - {fileID: 8668521632030408339, guid: ecb98fe957b252547a8177ac5ded2976, type: 3}
+  - {fileID: 8668521632030408339, guid: 7269f76f414651942b78f172d7cb1398, type: 3}
+  - {fileID: 8668521632030408339, guid: 3250a6c9b2bc4394c82494d47cc8d83c, type: 3}
+  - {fileID: 8668521632030408339, guid: 54a0c38c8bf842642ae2b0d85608357d, type: 3}
+  - {fileID: 8668521632030408339, guid: 1c2006772aa7d184bbe8fbf20ae0f6a0, type: 3}
+  - {fileID: 8668521632030408339, guid: 56d28c7e531b87d4a920224e861a3a94, type: 3}
+  - {fileID: 8668521632030408339, guid: 04dfcb22aa1c00740be5998eef130629, type: 3}
+  - {fileID: 8668521632030408339, guid: f49e6d85a51147746b8976427d65f4a9, type: 3}
+  - {fileID: 8668521632030408339, guid: 030779dadf1a2fe449c9155f467f4f41, type: 3}
+  - {fileID: 8668521632030408339, guid: b7571e5b2f782b1448d8f44cd12f9cbc, type: 3}
+  - {fileID: 8668521632030408339, guid: b9e9e934de3182d4a8d41caa9477b48f, type: 3}
   preparingOffset: 20
   preparingAsset: {fileID: 735146020}
 --- !u!1001 &460159590
@@ -16276,6 +16288,7 @@ MonoBehaviour:
   laneDistanceValue: 2
   maxForwardSpeed: 15
   laneChangeCooldown: 0.25
+  runChangeCooldown: 2
   rollCooldown: 1.5
   smoothRateChangeLane: 5
   playerMesh: {fileID: 5064561220890454469}

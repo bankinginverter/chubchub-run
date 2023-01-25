@@ -39,7 +39,9 @@ public class TileManager : MonoBehaviour
 
         [Header("Spawn Item Section")]
 
-        [SerializeField] private int maxAmountOfGenerateItem = 4;
+        [SerializeField] private int minAmountOfGenerateItem = 1;
+
+        [SerializeField] private int maxAmountOfGenerateItem = 6;
 
         [SerializeField] private float spawnedRange = 10f;
 
@@ -205,7 +207,7 @@ public class TileManager : MonoBehaviour
                     break;
             }
             
-            int randomAmountOfItem = Random.Range(0, maxAmountOfGenerateItem + 1);
+            int randomAmountOfItem = Random.Range(minAmountOfGenerateItem, maxAmountOfGenerateItem + 1);
 
             for(int i = 0; i < randomAmountOfItem; i++)
             {

@@ -38,7 +38,7 @@ public class FaceDetector : MonoBehaviour
 
             if(faces.Length >= 1)
             {
-                FacePosition.CheckDirectionX(faces[0].Location.X);
+                FacePosition.CheckDirection(faces[0].Location);
 
                 // MyFace = faces[0]; // Display Cast
             }

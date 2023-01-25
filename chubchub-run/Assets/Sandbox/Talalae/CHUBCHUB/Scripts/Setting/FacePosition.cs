@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class FacePosition
 {
-    private float _yAxisPrivious = 0;
-    private float _yAxisCurrent = 0;
+    private static float _yAxisPrivious = 0;
+
+    private static float _yAxisCurrent = 0;
+
+    public static void CheckDirection(OpenCvSharp.Point index)
+    {
+        CheckDirectionX(index.X);
+
+        CheckDirectionY(index.Y);
+    }
 
     public static void CheckDirectionX(float x_index)
     {
@@ -21,29 +29,19 @@ public class FacePosition
         }
     }
 
-    public void CheckDirectionY()
+    public static void CheckDirectionY(float y_index)
     {
-        //float _yAxisCurrent = FaceDetector.Instance.DetectedFacePosition.y;
+        _yAxisCurrent = y_index;
 
-        if (_yAxisPrivious > _yAxisCurrent + 3 || _yAxisPrivious < _yAxisCurrent - 3)
+        if (_yAxisPrivious > _yAxisCurrent + 50 || _yAxisPrivious < _yAxisCurrent - 50)
         {
             EnumulatorFaceState.FaceRunState = EnumulatorFaceState.FaceVerticalState.RUN;
+
             _yAxisPrivious = _yAxisCurrent;
         }
-        else if(_yAxisPrivious == _yAxisCurrent)
+        else
         {
             EnumulatorFaceState.FaceRunState = EnumulatorFaceState.FaceVerticalState.IDLE;
         }
     }
-
-    // public float GetRawDataFaceLocationX()
-    // {
-    //    return FaceDetector.Instance.DetectedFacePosition.x;
-    // }
-
-    // public float GetRawDataFaceLocationY()
-    // {
-    //     return FaceDetector.Instance.DetectedFacePosition.y;
-    // }
-
 }

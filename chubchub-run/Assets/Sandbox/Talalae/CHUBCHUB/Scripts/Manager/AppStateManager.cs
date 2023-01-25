@@ -92,6 +92,39 @@ public class AppStateManager
                         
                         break;
 
+                    case Enumerators.AppState.APP_KITCHEN_CHOOSE:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveKitchenScreenPanel();
+                        AppUIManager.Instance.ActiveKitchenScreen("CHOOSE");
+                        AppUIManager.Instance.VerifyCookingRecipe();
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_KITCHEN_COOK:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.ActiveKitchenScreen("COOK");
+                        
+                        break;
+
+                    case Enumerators.AppState.APP_KITCHEN_RESULT:
+
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.ActiveKitchenScreen("RESULT");
+                        
+                        break;
+
                     case Enumerators.AppState.APP_PREPARING:
 
                         //Debug Region
