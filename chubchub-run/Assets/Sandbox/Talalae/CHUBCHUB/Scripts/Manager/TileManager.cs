@@ -132,7 +132,7 @@ public class TileManager : MonoBehaviour
 
                 case "CITY":
 
-                    
+                    preparingAsset.transform.GetChild(2).gameObject.SetActive(true);
                     
                     break;
             }
