@@ -8,6 +8,8 @@ public class AppStateManager
 
         public static string mapSelectedFromAppState;
 
+        public static string recipeSelectedFromAppState;
+
         private static readonly object Sync = new object();
         
         private static AppStateManager _instance;
@@ -51,6 +53,8 @@ public class AppStateManager
                         AppUIManager.Instance.SetActiveLoadingScreenPanel();
                         MainUnityLifeCycle.Instance.LoadInitialGameData();
                         AppUIManager.Instance.SetDataMapSelectedFromMenuVariable("FOREST");
+                        KitchenGameplayManager.Instance.SetupRaycastComponent(false);
+                        SoundManager.Instance.SetBackgroundAudio(0);
                         
                         break;
 
@@ -99,8 +103,7 @@ public class AppStateManager
 
                         //Runtime Function Region
                         AppUIManager.Instance.CloseAllComponent();
-                        AppUIManager.Instance.SetActiveKitchenScreenPanel();
-                        AppUIManager.Instance.ActiveKitchenScreen("CHOOSE");
+                        AppUIManager.Instance.SetActiveKitchenSelectScreenPanel();
                         AppUIManager.Instance.VerifyCookingRecipe();
                         
                         break;
@@ -111,7 +114,9 @@ public class AppStateManager
                         DebugStateManager.Instance.DebugAppStateChanged(index); 
 
                         //Runtime Function Region
-                        AppUIManager.Instance.ActiveKitchenScreen("COOK");
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveKitchenGameplayScreenPanel();  
+                        KitchenStateManager.Instance.SetCurrentKitchenState(Enumerators.KichenState.KITCHEN_INIT);
                         
                         break;
 
@@ -121,7 +126,10 @@ public class AppStateManager
                         DebugStateManager.Instance.DebugAppStateChanged(index); 
 
                         //Runtime Function Region
-                        AppUIManager.Instance.ActiveKitchenScreen("RESULT");
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveKitchenResultScreenPanel();  
+                        KitchenGameplayManager.Instance.ClearDataKitchenGameplay();
+                        AppUIManager.Instance.FetchedResultIndexPanel();
                         
                         break;
 
@@ -188,6 +196,7 @@ public class AppStateManager
                         TileManager.Instance.SettingTileFactor(mapSelectedFromAppState);
                         TileManager.Instance.SetupPreparingAsset();
                         TileManager.Instance.SetupTileSpawner();
+                        SoundManager.Instance.SetBackgroundAudio(0);
 
                         break;
 
@@ -199,6 +208,17 @@ public class AppStateManager
                         //Runtime Function Region
                         GameplayUIManager.Instance.CloseAllComponent();
                         GameplayUIManager.Instance.SetActiveEndGameScreenPanel();
+
+                        break;
+
+                    case Enumerators.AppState.APP_RESET:
+                    
+                        //Debug Region
+                        DebugStateManager.Instance.DebugAppStateChanged(index); 
+
+                        //Runtime Function Region
+                        AppUIManager.Instance.CloseAllComponent();
+                        AppUIManager.Instance.SetActiveResetScreenPanel();
 
                         break;
 

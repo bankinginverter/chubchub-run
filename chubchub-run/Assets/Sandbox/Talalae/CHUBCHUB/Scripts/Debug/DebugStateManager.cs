@@ -29,5 +29,10 @@ public class DebugStateManager : MonoBehaviour
             Debug.Log("Current App State : <color=green>" + CurrentAppState + "</color>");
         }
 
+        public void DebugKitchenStateChanged(Enumerators.KichenState CurrentAppState)
+        {
+            Debug.Log("Current App State : <color=pink>" + CurrentAppState + "</color>");
+        }
+
     #endregion
 }

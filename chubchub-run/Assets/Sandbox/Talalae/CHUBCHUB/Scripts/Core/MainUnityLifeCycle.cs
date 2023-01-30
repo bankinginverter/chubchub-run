@@ -124,11 +124,11 @@ public class MainUnityLifeCycle : MonoBehaviour
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_MAP);
         }
 
-        public void APPSTATE_KitchenState()
+        public void APPSTATE_KitchenChooseState()
         {
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_KITCHEN_CHOOSE);
         }
-
+        
         public void APPSTATE_LaunchGameState()
         {
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_LAUNCH);
@@ -142,6 +142,11 @@ public class MainUnityLifeCycle : MonoBehaviour
         public void APPSTATE_EndgameState()
         {
             AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_ENDGAME);
+        }
+
+        public void APPSTATE_ResetState()
+        {
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_RESET);
         }
 
     #endregion

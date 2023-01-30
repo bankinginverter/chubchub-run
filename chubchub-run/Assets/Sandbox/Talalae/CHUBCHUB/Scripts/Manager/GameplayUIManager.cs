@@ -45,7 +45,7 @@ public class GameplayUIManager : MonoBehaviour
 
         [SerializeField] private TMP_Text result_caloriesText;
 
-        private float caloriesFacetor = 0.1f;
+        private float caloriesFacetor = 0.05f;
 
     #endregion
 

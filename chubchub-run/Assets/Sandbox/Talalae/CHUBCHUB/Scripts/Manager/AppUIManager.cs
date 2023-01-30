@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class AppUIManager : MonoBehaviour
 {
@@ -39,7 +40,13 @@ public class AppUIManager : MonoBehaviour
 
         [SerializeField] private GameObject mapSelectingScreenComponent;
 
-        [SerializeField] private GameObject kitchenScreenComponent;
+        [SerializeField] private GameObject kitchenSelectScreenComponent;
+
+        [SerializeField] private GameObject kitchenGameplayComponent;
+
+        [SerializeField] private GameObject kitchenResultComponent;
+
+        [SerializeField] private GameObject resetComponent;
 
         [Header("Progress Loading Section")]
 
@@ -77,17 +84,25 @@ public class AppUIManager : MonoBehaviour
 
         private int mapIndex;
 
-        [Header("Kitchen Screen Section")]
+        [Header("Kitchen Select Screen Section")]
 
         [SerializeField] private GameObject ChooseRecipeComponent;
-
-        [SerializeField] private GameObject CookingProcessComponent;
-
-        [SerializeField] private GameObject CookingResultComponent;
 
         [SerializeField] private GameObject[] RecipeComponent;
 
         private int[] recipeValue;
+
+        [Header("Kitchen Gameplay Screen Section")]
+
+        [SerializeField] GameObject NextSequenceButton;
+
+        [SerializeField] TMP_Text ItemIndicator;
+
+        [SerializeField] TMP_Text methodDescript;
+
+        [Header("Kitchen Result Screen Section")]
+
+        [SerializeField] GameObject[] ResultIndexPanel;
 
         [Header("Preparing Screen Section")]
 
@@ -114,12 +129,6 @@ public class AppUIManager : MonoBehaviour
         [SerializeField] private GameObject itemComponentTemplate;
 
         [SerializeField] private Sprite[] itemImage;
-        
-        // ============ Image Code ============
-        //  Imageindex [0] is INGREDIANT_BREAD
-        //  Imageindex [1] is INGREDIANT_HAM
-        //  Imageindex [2] is INGREDIANT_FISH
-        // ====================================
 
         private List<GameObject> allItemComponent = new List<GameObject>();
 
@@ -161,7 +170,13 @@ public class AppUIManager : MonoBehaviour
 
                 mapSelectingScreenComponent.SetActive(false);
 
-                kitchenScreenComponent.SetActive(false);
+                kitchenSelectScreenComponent.SetActive(false);
+
+                kitchenGameplayComponent.SetActive(false);
+
+                kitchenResultComponent.SetActive(false);
+
+                resetComponent.SetActive(false);
 
             #endregion
 
@@ -188,6 +203,11 @@ public class AppUIManager : MonoBehaviour
         public void SetActiveLoadingScreenPanel()
         {
             loadingScreenComponent.SetActive(true);
+        }
+
+        public void SetActiveResetScreenPanel()
+        {
+            resetComponent.SetActive(true);
         }
 
         public void SetActiveRegisterScreenPanel()
@@ -230,9 +250,19 @@ public class AppUIManager : MonoBehaviour
             mapSelectingScreenComponent.SetActive(true);
         }
 
-        public void SetActiveKitchenScreenPanel()
+        public void SetActiveKitchenSelectScreenPanel()
         {
-            kitchenScreenComponent.SetActive(true);
+            kitchenSelectScreenComponent.SetActive(true);
+        }
+
+        public void SetActiveKitchenGameplayScreenPanel()
+        {
+            kitchenGameplayComponent.SetActive(true);
+        }
+
+        public void SetActiveKitchenResultScreenPanel()
+        {
+            kitchenResultComponent.SetActive(true);
         }
 
         public void SetLoadingProgression(float index)
@@ -334,6 +364,16 @@ public class AppUIManager : MonoBehaviour
             {
                 graphDataIndex[i].value = 0;
             }
+        }
+
+        public void NextSequenceButtonSetting(bool index)
+        {
+            NextSequenceButton.SetActive(index);
+        }
+
+        public void SetItemText(string index)
+        {
+            ItemIndicator.text = index;
         }
 
         public void VerifyCookingRecipe()
@@ -512,6 +552,17 @@ public class AppUIManager : MonoBehaviour
             VerifyAmountRecipe();
         }
 
+        public void DeleteSaveFile()
+        {
+            File.Delete (Application.persistentDataPath + "/player.HealthData");
+
+            File.Delete (Application.persistentDataPath + "/player.ItemData");          
+
+            File.Delete (Application.persistentDataPath + "/player.MatchData");
+
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_INIT);
+        }
+
         public void VerifyAmountRecipe()
         {
             if(recipeValue[0] == 6)
@@ -669,39 +720,112 @@ public class AppUIManager : MonoBehaviour
             }
         }
 
-        public void ActiveKitchenScreen(string index)
+        public void ChangeDescriptionMethod()
         {
-            DeactiveKitchenScreen();
-
-            switch(index)
+            switch(KitchenStateManager.CurrentKitchenState)
             {
-                case "CHOOSE":
+                    case Enumerators.KichenState.CLEARSOUP_SEQUENCE_1:
 
-                    ChooseRecipeComponent.SetActive(true);
+                        methodDescript.text = "1. Mix pork with pepper, soy sauce and mix well.";
+                        
+                        break;
 
-                    break;
+                    case Enumerators.KichenState.CLEARSOUP_SEQUENCE_2:
 
-                case "COOK":
+                        methodDescript.text = "2. Boil water and add garlic. When the water boils, add the marinated pork.";
 
-                    CookingProcessComponent.SetActive(true);
+                        break;
 
-                    break;
+                    case Enumerators.KichenState.CLEARSOUP_SEQUENCE_3:
 
-                case "RESULT":
+                        methodDescript.text = "3. Season with soy sauce and sugar, then add cabbage and carrots to boil until cooked.";
+                        
+                        break;
 
-                    CookingResultComponent.SetActive(true);
+                    case Enumerators.KichenState.CLEARSOUP_SEQUENCE_4:
 
-                    break;
+                        methodDescript.text = "4. Add tofu, sprinkle with celery, then turn off the heat and put on a plate.";
+                        
+                        break;
+
+                    case Enumerators.KichenState.STIRFRIED_SEQUENCE_1:
+
+                        methodDescript.text = "1. Coarsely pound the garlic and chilli.";
+
+                        break;
+
+                    case Enumerators.KichenState.STIRFRIED_SEQUENCE_2:
+
+                        methodDescript.text = "2. Heat a pan, add vegetable oil, when the oil is hot, add garlic and chili, stir until fragrant.";
+                        
+                        break;
+
+                    case Enumerators.KichenState.STIRFRIED_SEQUENCE_3:
+
+                        methodDescript.text = "3. Add pork and stir until cooked. then add a little water. Season with oyster sauce, soy sauce, sweet soy sauce and sugar.";
+
+                        break;
+
+                    case Enumerators.KichenState.STIRFRIED_SEQUENCE_4:
+                    
+                        methodDescript.text = "4. Turn off the fire, add basil. then put on a plate";
+                        
+                        break;
+
+                    case Enumerators.KichenState.FRIEDRICE_SEQUENCE_1:
+
+                        methodDescript.text = "1. Heat the vegetable  oil, add garlic and fry until fragrant. Then add eggs and chicken breast, ";
+                        
+                        break;
+
+                    case Enumerators.KichenState.FRIEDRICE_SEQUENCE_2:
+
+                        methodDescript.text = "2. Stir together until the eggs are cooked, add the rice and season with soy sauce and sugar.";
+
+                        break;
+
+                    case Enumerators.KichenState.FRIEDRICE_SEQUENCE_3:
+
+                        methodDescript.text = "3. Put corn, peas and carrot into the pan and stir until cooked. then put on a plate";
+
+                        return;
             }
         }
 
-        private void DeactiveKitchenScreen()
+        public void SendRecipeToState(string index)
         {
-            ChooseRecipeComponent.SetActive(false);
+            AppStateManager.recipeSelectedFromAppState = index;
+            
+            AppStateManager.Instance.SetCurrentAppState(Enumerators.AppState.APP_KITCHEN_COOK);
+        }
 
-            CookingProcessComponent.SetActive(false);
+        public void FetchedResultIndexPanel()
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                ResultIndexPanel[i].SetActive(false);
+            }
 
-            CookingResultComponent.SetActive(false);
+            switch(AppStateManager.recipeSelectedFromAppState)
+            {
+                case "CLEARSOUP":
+
+                    ResultIndexPanel[0].SetActive(true);
+
+                    break;
+
+                case "STIRFRIED":
+
+                    ResultIndexPanel[1].SetActive(true);
+
+                    break;
+
+                case "FRIEDRICE":
+
+                    ResultIndexPanel[2].SetActive(true);
+                    
+                    break;
+            }
         }
 
         private int CalculateMonthToDay(int index_month, int index_year)
@@ -721,21 +845,87 @@ public class AppUIManager : MonoBehaviour
 
             switch(PlayerManager.Instance.SpecificItemData_NAME(index))
             {
-                case "INGREDIANT_BREAD":
+                case "INGREDIANT_BASIL":
 
                     imageIndex = 0;
 
                     break;
 
-                case "INGREDIANT_HAM":
+                case "INGREDIANT_CABBAGE":
 
                     imageIndex = 1;
 
                     break;
 
-                case "INGREDIANT_FISH":
+                case "INGREDIANT_CARROT":
 
                     imageIndex = 2;
+
+                    break;
+                
+                case "INGREDIANT_CELERY":
+
+                    imageIndex = 3;
+
+                    break;
+
+                case "INGREDIANT_CHICKEN":
+
+                    imageIndex = 4;
+
+                    break;
+
+                case "INGREDIANT_CHILI":
+
+                    imageIndex = 5;
+
+                    break;
+
+                case "INGREDIANT_CORN":
+
+                    imageIndex = 6;
+
+                    break;
+
+                case "INGREDIANT_CUCUMBER":
+
+                    imageIndex = 7;
+
+                    break;
+
+                case "INGREDIANT_EGG":
+
+                    imageIndex = 8;
+
+                    break;
+
+                case "INGREDIANT_GALIC":
+
+                    imageIndex = 9;
+
+                    break;
+
+                case "INGREDIANT_PEAS":
+
+                    imageIndex = 10;
+
+                    break;
+
+                case "INGREDIANT_PORK":
+
+                    imageIndex = 11;
+
+                    break;
+
+                case "INGREDIANT_RICE":
+
+                    imageIndex = 12;
+
+                    break;
+
+                case "INGREDIANT_TOFU":
+
+                    imageIndex = 13;
 
                     break;
             }

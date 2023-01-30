@@ -22,6 +22,8 @@ public class ItemInteraction : MonoBehaviour
             {
                 PlayerManager.Instance.AddItem(new Item {itemType = itemTypeSetup, amount = 1});
 
+                SoundManager.Instance.SetFXAudio(0);
+
                 Destroy(gameObject);
             }
         }

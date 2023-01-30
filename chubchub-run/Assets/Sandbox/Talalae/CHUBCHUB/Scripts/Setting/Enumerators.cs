@@ -16,15 +16,25 @@ public class Enumerators
         APP_LAUNCH,
         APP_GAMEPLAY,
         APP_ENDGAME,
-        APP_SETTING
+        APP_RESET
     }
 
-    public enum GameplayState
+    public enum KichenState
     {
         NONE = 0,
-        GAMEPLAY_INIT,
-        GAMEPLAY_PREPARE,
-        GAMEPLAY_START,
-        GAMEPLAY_STOP
+
+        KITCHEN_INIT,
+        CLEARSOUP_SEQUENCE_1,
+        CLEARSOUP_SEQUENCE_2,
+        CLEARSOUP_SEQUENCE_3,
+        CLEARSOUP_SEQUENCE_4,
+        STIRFRIED_SEQUENCE_1,
+        STIRFRIED_SEQUENCE_2,
+        STIRFRIED_SEQUENCE_3,
+        STIRFRIED_SEQUENCE_4,
+        FRIEDRICE_SEQUENCE_1,
+        FRIEDRICE_SEQUENCE_2,
+        FRIEDRICE_SEQUENCE_3
+
     }
 }

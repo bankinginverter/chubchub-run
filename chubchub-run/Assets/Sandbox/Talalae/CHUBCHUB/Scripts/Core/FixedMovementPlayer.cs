@@ -171,6 +171,8 @@ public class FixedMovementPlayer : MonoBehaviour
                 Destroy(hit.gameObject);
                 
                 int.TryParse(hit.transform.name[0].ToString(), out int hitIndex) ;
+
+                SoundManager.Instance.SetFXAudio(1);
         
                 if(hitIndex != 3)
                 {
