@@ -527,12 +527,12 @@ public class AppUIManager : MonoBehaviour
                         if(itemdata.itemListData[i].amount >= 8)
                         {
                             recipeValue[0]++;
+
+                            recipeValue[1]++;
                         }
 
                         if(itemdata.itemListData[i].amount >= 15)
                         {
-                            recipeValue[1]++;
-
                             recipeValue[2]++;
                         }
 
@@ -550,6 +550,165 @@ public class AppUIManager : MonoBehaviour
             }
 
             VerifyAmountRecipe();
+        }
+        
+        public void EndCookingSync()
+        {
+            PlayerItemData itemdata = SaveSystem.LoadPlayerGameplay();
+
+            for(int i = 0; i < itemdata.itemListData.Count; i++)
+            {
+                switch(itemdata.itemListData[i].itemType)
+                {
+                    case Item.ItemType.INGREDIANT_BASIL:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CABBAGE:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "CLEARSOUP")
+                        {
+                            itemdata.itemListData[i].amount -= 30;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CARROT:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 5;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CELERY:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "CLEARSOUP")
+                        {
+                            itemdata.itemListData[i].amount -= 7;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CHICKEN:
+
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 10;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CHILI:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CORN:
+
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 5;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_CUCUMBER:
+
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 5;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_EGG:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_GALIC:
+                        
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_PEAS:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 5;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_PORK:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "CLEARSOUP")
+                        {
+                            itemdata.itemListData[i].amount -= 5;
+                        }
+
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 20;
+                        }
+
+                        break;
+
+                    case Item.ItemType.INGREDIANT_RICE:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "CLEARSOUP")
+                        {
+                            itemdata.itemListData[i].amount -= 8;
+                        }
+
+                        if(AppStateManager.recipeSelectedFromAppState == "STIRFRIED")
+                        {
+                            itemdata.itemListData[i].amount -= 8;
+                        }
+
+                        if(AppStateManager.recipeSelectedFromAppState == "FRIEDRICE")
+                        {
+                            itemdata.itemListData[i].amount -= 15;
+                        }
+                       
+                        break;
+
+                    case Item.ItemType.INGREDIANT_TOFU:
+                    
+                        if(AppStateManager.recipeSelectedFromAppState == "CLEARSOUP")
+                        {
+                            itemdata.itemListData[i].amount -= 1;
+                        }
+
+                        break;
+                }
+            }
+
+            PlayerManager.Instance.OverwriteSaveData(itemdata);
         }
 
         public void DeleteSaveFile()
@@ -726,67 +885,67 @@ public class AppUIManager : MonoBehaviour
             {
                     case Enumerators.KichenState.CLEARSOUP_SEQUENCE_1:
 
-                        methodDescript.text = "1. Mix pork with pepper, soy sauce and mix well.";
+                        methodDescript.text = "1. ผสมหมูสับกับพริกไทยขาวป่น และซีอิ๊วขาว คลุกเคล้าให้เข้ากัน";
                         
                         break;
 
                     case Enumerators.KichenState.CLEARSOUP_SEQUENCE_2:
 
-                        methodDescript.text = "2. Boil water and add garlic. When the water boils, add the marinated pork.";
+                        methodDescript.text = "2. ต้มน้ำเปล่า ใส่กระเทียม เมื่อน้ำเดือดปั้นหมูที่หมักไว้ ให้เป็นก้อนกลม ก่อนใส่หม้อลงไปต้มให้สุก";
 
                         break;
 
                     case Enumerators.KichenState.CLEARSOUP_SEQUENCE_3:
 
-                        methodDescript.text = "3. Season with soy sauce and sugar, then add cabbage and carrots to boil until cooked.";
+                        methodDescript.text = "3. ปรุงรสด้วยซีอิ๊วขาว น้ำตาล แล้วใส่ผักกาดขาว กับ แครอทลองไปต้มจนสุก.";
                         
                         break;
 
                     case Enumerators.KichenState.CLEARSOUP_SEQUENCE_4:
 
-                        methodDescript.text = "4. Add tofu, sprinkle with celery, then turn off the heat and put on a plate.";
+                        methodDescript.text = "4. ใส่เต้าหู้หลอดลงไป แล้วโรยด้วยผักคื่นฉ่าย จากนั้นปิดไฟแล้วตักใส่จานเสิร์ฟ";
                         
                         break;
 
                     case Enumerators.KichenState.STIRFRIED_SEQUENCE_1:
 
-                        methodDescript.text = "1. Coarsely pound the garlic and chilli.";
+                        methodDescript.text = "1. โขลกกระเทียมและพริกให้หยาบ";
 
                         break;
 
                     case Enumerators.KichenState.STIRFRIED_SEQUENCE_2:
 
-                        methodDescript.text = "2. Heat a pan, add vegetable oil, when the oil is hot, add garlic and chili, stir until fragrant.";
+                        methodDescript.text = "2. นำกระทะตั้งไฟให้ร้อนและใส่น้ำมันพืชลงไปเมื่อน้ำมันร้อนใส่กระเทียมและพริกที่โขลกลงไปผัดจนหอ.";
                         
                         break;
 
                     case Enumerators.KichenState.STIRFRIED_SEQUENCE_3:
 
-                        methodDescript.text = "3. Add pork and stir until cooked. then add a little water. Season with oyster sauce, soy sauce, sweet soy sauce and sugar.";
+                        methodDescript.text = "3. ใส่หมูลงไปผัดให้สุก แล้วใส่น้ำเปล่าลงไปเล็กน้อย ปรุงด้วย ซอสหอยนางรม  ซอสถั่วเหลือง ซีอิ๊วดำ และ น้ำตาล";
 
                         break;
 
                     case Enumerators.KichenState.STIRFRIED_SEQUENCE_4:
                     
-                        methodDescript.text = "4. Turn off the fire, add basil. then put on a plate";
+                        methodDescript.text = "4. ปิดไฟใส่ใบกะเพรา แล้วตักใส่จานเสิร์ฟ";
                         
                         break;
 
                     case Enumerators.KichenState.FRIEDRICE_SEQUENCE_1:
 
-                        methodDescript.text = "1. Heat the vegetable  oil, add garlic and fry until fragrant. Then add eggs and chicken breast, ";
+                        methodDescript.text = "1. นำกระทะตั้งไฟให้ร้อนและใส่น้ำมัีนพืชลงไป เมื่อน้ำมันร้อน ใส่กระเทียมสับลงไปผัดจนหอม แล้วใส่อกไก้กับไข่ลงไป";
                         
                         break;
 
                     case Enumerators.KichenState.FRIEDRICE_SEQUENCE_2:
 
-                        methodDescript.text = "2. Stir together until the eggs are cooked, add the rice and season with soy sauce and sugar.";
+                        methodDescript.text = "2. พอไข่เริ่มสุกแล้วให้เติมข้าวลงไปผัดให้เข้ากันและปรุงรสด้วยซอสถั่วเหลือง และ น้ำตาล";
 
                         break;
 
                     case Enumerators.KichenState.FRIEDRICE_SEQUENCE_3:
 
-                        methodDescript.text = "3. Put corn, peas and carrot into the pan and stir until cooked. then put on a plate";
+                        methodDescript.text = "3. ใส่ข้าวโพด ถั่วลันเตา และ แครอท ลงไปผัดให้เข้ากันจนสุก จากนั้นตักใส่จานเสิร์ฟ";
 
                         return;
             }

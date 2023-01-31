@@ -3849,6 +3849,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 1708512692804015408}
+    - target: {fileID: 7556824766959410054, guid: c911561d7c795bf4d9d3c4e3f37881d9, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E1C\u0E31\u0E01\u0E04\u0E37\u0E48\u0E19\u0E09\u0E48\u0E32\u0E22"
+      objectReference: {fileID: 0}
     - target: {fileID: 7877249171842421640, guid: c911561d7c795bf4d9d3c4e3f37881d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.015
@@ -3979,6 +3983,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 1708512692804015408}
+    - target: {fileID: 7556824766959410054, guid: 5142d931c1235224c95348489f9cbf41, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E40\u0E15\u0E49\u0E32\u0E2B\u0E39\u0E49"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408339, guid: 5142d931c1235224c95348489f9cbf41, type: 3}
       propertyPath: m_Name
       value: Cooking_Tofu

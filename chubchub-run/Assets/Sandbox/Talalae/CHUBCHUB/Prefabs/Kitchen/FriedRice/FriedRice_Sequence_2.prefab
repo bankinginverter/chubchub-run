@@ -4008,6 +4008,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 926787286883715723}
+    - target: {fileID: 6864429469609499341, guid: 0e31a73c2ccbe3d49b6af91a8c319aa8, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E19\u0E49\u0E33\u0E15\u0E32\u0E25"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408339, guid: 0e31a73c2ccbe3d49b6af91a8c319aa8, type: 3}
       propertyPath: m_Name
       value: Cooking_Sugar
@@ -4146,6 +4150,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 9127351755153418449}
+    - target: {fileID: 8711208293598734152, guid: 14f6a4da9b7e84547bf7ce94186ea6ac, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E0B\u0E2D\u0E2A\u0E16\u0E31\u0E48\u0E27\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E07"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14f6a4da9b7e84547bf7ce94186ea6ac, type: 3}
 --- !u!4 &1339417537154465770 stripped
@@ -4232,6 +4240,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 9058870406789519953}
+    - target: {fileID: 8711208293598734152, guid: 1e5c8fcd6a667204398629804768bf11, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E02\u0E49\u0E32\u0E27"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e5c8fcd6a667204398629804768bf11, type: 3}
 --- !u!4 &109517834750580769 stripped

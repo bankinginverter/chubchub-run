@@ -803,7 +803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveToKitchen: {fileID: 4486527241378014794}
   useGravity: 0
-  ItemIndicatorText: Light Soy Sauce
+  ItemIndicatorText: "\u0E0B\u0E35\u0E2D\u0E34\u0E4A\u0E27\u0E02\u0E32\u0E27"
 --- !u!1 &2755381456767529154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,6 +3835,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 4689705078115688570}
+    - target: {fileID: 7556824766959410054, guid: 526afdec810fa564585c4c6ac7adc7b1, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E41\u0E04\u0E23\u0E2D\u0E17"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408339, guid: 526afdec810fa564585c4c6ac7adc7b1, type: 3}
       propertyPath: m_Name
       value: Cooking_Carrott
@@ -4061,6 +4065,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 3565586737675915768}
+    - target: {fileID: 6864429469609499341, guid: 0e31a73c2ccbe3d49b6af91a8c319aa8, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E19\u0E49\u0E33\u0E15\u0E32\u0E25"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408339, guid: 0e31a73c2ccbe3d49b6af91a8c319aa8, type: 3}
       propertyPath: m_Name
       value: Cooking_Sugar
@@ -4213,6 +4221,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 4689705078115688570}
+    - target: {fileID: 7556824766959410054, guid: 520697ef371c72a4ba6019f36de261e3, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E1C\u0E31\u0E01\u0E01\u0E32\u0E14\u0E02\u0E32\u0E27"
+      objectReference: {fileID: 0}
     - target: {fileID: 8556499045006345426, guid: 520697ef371c72a4ba6019f36de261e3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

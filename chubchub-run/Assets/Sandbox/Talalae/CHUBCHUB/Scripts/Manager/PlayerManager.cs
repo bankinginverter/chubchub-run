@@ -188,6 +188,13 @@ public class PlayerManager : MonoBehaviour
             #endregion
         }
 
+        public void OverwriteSaveData(PlayerItemData index)
+        {
+            GAME_itemList = index.itemListData;
+
+            SavePlayerGameplay();
+        }
+
         public void InitialFileValidSetup(bool index)
         {
             initialFileValid = index;

@@ -34,7 +34,7 @@ public class RayCastingToIngredients : MonoBehaviour
             }
             else
             {
-                AppUIManager.Instance.SetItemText("No Ingredient selected");
+                AppUIManager.Instance.SetItemText("ไม่มีวัตถุดิบที่เลือกอยู่");
             }
         }
 

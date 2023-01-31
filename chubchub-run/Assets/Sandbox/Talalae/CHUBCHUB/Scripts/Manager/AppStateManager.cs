@@ -130,6 +130,7 @@ public class AppStateManager
                         AppUIManager.Instance.SetActiveKitchenResultScreenPanel();  
                         KitchenGameplayManager.Instance.ClearDataKitchenGameplay();
                         AppUIManager.Instance.FetchedResultIndexPanel();
+                        AppUIManager.Instance.EndCookingSync();
                         
                         break;
 

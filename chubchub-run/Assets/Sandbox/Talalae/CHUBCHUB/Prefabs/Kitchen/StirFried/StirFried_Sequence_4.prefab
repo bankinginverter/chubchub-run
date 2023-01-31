@@ -3840,6 +3840,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 1708512692804015408}
+    - target: {fileID: 2309605094610607936, guid: 7eace84a821b6124391a56b5694a9666, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E43\u0E1A\u0E01\u0E30\u0E40\u0E1E\u0E23\u0E32"
+      objectReference: {fileID: 0}
     - target: {fileID: 2987695749457091636, guid: 7eace84a821b6124391a56b5694a9666, type: 3}
       propertyPath: m_RootOrder
       value: 1

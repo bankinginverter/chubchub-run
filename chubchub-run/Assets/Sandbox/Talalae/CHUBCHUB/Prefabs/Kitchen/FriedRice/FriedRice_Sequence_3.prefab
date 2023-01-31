@@ -3932,6 +3932,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 8118038088399309420}
+    - target: {fileID: 7556824766959410054, guid: 526afdec810fa564585c4c6ac7adc7b1, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E41\u0E04\u0E23\u0E2D\u0E17"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408337, guid: 526afdec810fa564585c4c6ac7adc7b1, type: 3}
       propertyPath: m_Size.x
       value: 1.45
@@ -4144,6 +4148,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 4689705078115688570}
+    - target: {fileID: 7556824766959410054, guid: 3b390f50b8296f644bf22ff1fbbf0b3c, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E02\u0E49\u0E32\u0E27\u0E42\u0E1E\u0E14"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408337, guid: 3b390f50b8296f644bf22ff1fbbf0b3c, type: 3}
       propertyPath: m_Size.y
       value: 0.5
@@ -4254,6 +4262,10 @@ PrefabInstance:
       propertyPath: moveToKitchen
       value: 
       objectReference: {fileID: 5218989197164791509}
+    - target: {fileID: 7556824766959410054, guid: 4dc33105e02540e4a9073998613ff44a, type: 3}
+      propertyPath: ItemIndicatorText
+      value: "\u0E16\u0E31\u0E48\u0E27\u0E25\u0E31\u0E19\u0E40\u0E15\u0E32"
+      objectReference: {fileID: 0}
     - target: {fileID: 8668521632030408337, guid: 4dc33105e02540e4a9073998613ff44a, type: 3}
       propertyPath: m_IsTrigger
       value: 0
